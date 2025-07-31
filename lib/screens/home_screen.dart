@@ -41,24 +41,42 @@ class HomeScreen extends StatelessWidget {
           textAlign: TextAlign.center,
         ),
       )
-          : ListView.builder(
+       :ListView.builder(
         padding: const EdgeInsets.symmetric(vertical: 8),
         itemCount: notes.length,
         itemBuilder: (context, index) {
           final note = notes[index];
-          return NoteCard(
-            note: note,
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => EditNoteScreen(
-                    note: note,
-                    index: index,
-                  ),
-                ),
+
+          return Dismissible(
+            key: ValueKey(note.timestamp),
+            direction: DismissDirection.endToStart,
+            background: Container(
+              color: Colors.red,
+              alignment: Alignment.centerRight,
+              padding: const EdgeInsets.only(right: 20),
+              child: const Icon(Icons.delete, color: Colors.white),
+            ),
+            onDismissed: (_) {
+              Provider.of<NoteProvider>(context, listen: false).deleteNote(index);
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('🗑️ Note Deleted')),
               );
             },
+
+            child: NoteCard(
+              note: note,
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => EditNoteScreen(
+                      note: note,
+                      index: index,
+                    ),
+                  ),
+                );
+              },
+            ),
           );
         },
       ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'home_screen.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -12,22 +13,37 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(seconds: 5), () {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (_) => const HomeScreen()),
-      );
-    });
+    _checkFirstTimeLaunch();
+  }
+
+  Future<void> _checkFirstTimeLaunch() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool isFirstTime = prefs.getBool('isFirstLaunch') ?? true;
+
+    if (isFirstTime) {
+      // First time splash screen delay
+      await Future.delayed(const Duration(seconds: 2));
+      await prefs.setBool('isFirstLaunch', false);
+    } else {
+      // second time it run fast
+      await Future.delayed(const Duration(seconds: 1));
+    }
+
+    // Navigate to Home Screen
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (_) => const HomeScreen()),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       backgroundColor: Colors.white,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
+          children: [
             Icon(Icons.note_alt_rounded, size: 80, color: Colors.indigo),
             SizedBox(height: 16),
             Text(

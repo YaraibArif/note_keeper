@@ -115,22 +115,7 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
                   ),
                 ),
                 const SizedBox(width: 10),
-                SizedBox(
-                  width: 150,
-                  child: ElevatedButton.icon(
-                    onPressed: _deleteNote,
-                    icon: const Icon(Icons.delete,color: Colors.white,),
-                    label: const Text('Delete',
-                      style: TextStyle(color: Colors.white),),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.red,
-                      padding: const EdgeInsets.symmetric(vertical: 14),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                  ),
-                ),
+
               ],
             )
           ],

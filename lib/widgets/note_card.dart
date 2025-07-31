@@ -6,7 +6,11 @@ class NoteCard extends StatelessWidget {
   final Note note;
   final VoidCallback? onTap;
 
-  const NoteCard({super.key, required this.note, required this.onTap});
+  const NoteCard({
+    super.key,
+    required this.note,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -22,20 +26,35 @@ class NoteCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                note.title,
-                style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.indigo,
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: Text(
+                      note.title,
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.indigo,
+                      ),
+                    ),
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.edit, color: Colors.indigo),
+                    onPressed: onTap,
+                  ),
+                ],
               ),
               const SizedBox(height: 6),
+
+              /// 📝 Description
               Text(
                 note.description,
                 style: const TextStyle(fontSize: 14),
               ),
               const SizedBox(height: 8),
+
+              /// ⏰ Timestamp
               Text(
                 DateFormat('dd MMM yyyy • hh:mm a').format(note.timestamp),
                 style: const TextStyle(fontSize: 12, color: Colors.grey),
