@@ -26,7 +26,7 @@ class SharedPref {
   }
   // Set a isfirstlaunch
   static Future<void> setIsFirstLaunch(bool value) async{
-    await _prefs?.getBool(AppKeys.isFirstTime)?? true;
+    await _prefs?.setBool(AppKeys.isFirstTime, value);
   }
   // get a isfirstlaunch
   static bool? isFirstLaunch(){
@@ -36,7 +36,7 @@ class SharedPref {
   static Future<void> setlastopened(DateTime time) async{
     await _prefs?.setString(AppKeys.lastopened, time.toIso8601String());
   }
-  // set last opened time
+  // get last opened time
   static DateTime? getLastopened(){
     final timeString = _prefs?.getString(AppKeys.lastopened);
     if(timeString == null) return null;
