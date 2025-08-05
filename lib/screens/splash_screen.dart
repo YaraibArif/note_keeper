@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:notes_keeper_intern/constants/shared_prefs_keys.dart';
+import 'package:notes_keeper_intern/utils/shared_preferences.dart';
 import 'home_screen.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -17,19 +18,17 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   Future<void> _checkFirstTimeLaunch() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool isFirstTime = prefs.getBool('isFirstLaunch') ?? true;
+    bool isFirstTime = SharedPref.getbool(AppKeys.isFirstTime) ?? true;
 
     if (isFirstTime) {
-      // First time splash screen delay
       await Future.delayed(const Duration(seconds: 2));
-      await prefs.setBool('isFirstLaunch', false);
+      await SharedPref.setBool(AppKeys.isFirstTime, false);
     } else {
-      // second time it run fast
       await Future.delayed(const Duration(seconds: 1));
     }
 
-    // Navigate to Home Screen
+    await SharedPref.setlastopened(DateTime.now());
+
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(builder: (_) => const HomeScreen()),

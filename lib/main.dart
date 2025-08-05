@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:notes_keeper_intern/utils/shared_preferences.dart';
 import 'package:provider/provider.dart';
 import 'providers/note_provider.dart';
 import 'screens/splash_screen.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await SharedPref.init();
   runApp(const MyApp());
 }
 
