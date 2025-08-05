@@ -42,13 +42,5 @@ class SharedPref {
     if(timeString == null) return null;
     return DateTime.tryParse(timeString);
   }
-  // Remove a specific key
-  static Future<void> remove(String key) async{
-    await _prefs?.remove(key);
-  }
-  // Clear all saved data
-   static Future<void> clear(String key) async{
-    await _prefs?.clear();
-   }
 
   }
